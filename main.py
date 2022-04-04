@@ -41,7 +41,7 @@ def main():
     # Test 4: Match a template (chunk) with a strip where the chunk appears at least twice
     template, temp_name = cropper.load_image(r'/home/dumbledorf/Dropbox/Universitet/8. Semester (2022)/Bachelorprojekt/Kode/Preprocessing/Data/Chunks/strip1._chunk2.png')
     image, img_name = cropper.load_image(r'/home/dumbledorf/Dropbox/Universitet/8. Semester (2022)/Bachelorprojekt/Kode/Preprocessing/Data/Strips/strip1forged.png')
-    matcher.match_image(image, template)
+    matcher.match_image(image, template, cv2.TM_SQDIFF_NORMED)
 
 
 if __name__ == "__main__":
