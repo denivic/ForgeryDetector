@@ -5,8 +5,8 @@ class ImageUtilities():
     def __init__(self):
         pass
 
-    def load_image(self, path):
-        return cv2.imread(path), path.split('\\')[-1][:-3]
+    def load_image(self, path: str, flag: int):
+        return cv2.imread(path, flag), path.split('\\')[-1][:-3]
 
     def save_image(self, img, path):
         cv2.imwrite(f'{path}.png', img)
