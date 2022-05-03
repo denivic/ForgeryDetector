@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt  # For plotting
 import numpy as np  # For transformation
 import torch  # PyTorch package
-import torchvision as tv  # For loading dataset and using various utilities
+# import torchvision as tv  # For loading dataset and using various utilities
 # import torch.nn as nn  # For building the neural network
 # import torch.nn.functional as nn_func  # For convolution functions
 # import torch.optim as optimizer  # For implementing optimization algorithms such as Stochastic Gradient Descent (SGD)

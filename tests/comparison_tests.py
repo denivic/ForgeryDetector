@@ -1,14 +1,10 @@
+
 # External
+import numpy as np
 import cv2
 import pylab as pl
-import numpy as np
-# from skimage.metrics import structural_similarity as ssim
 
 # Custom
-# from core.classifying.match import ImageMatcher
-# from core.classifying.classify import ImageClassifier
-# from core.preprocessing.extract import ImageExtractor
-# from core.preprocessing.crop import ImageCropper
 from core.preprocessing.utils import ImageUtilities
 
 
@@ -51,14 +47,8 @@ def template_matching(img, target):
 
 if __name__ == '__main__':
     utils = ImageUtilities()
-
-    # Windows
-    # image, image_name = utils.load_image(r'C:\Users\Dumbledorf\Dropbox\Universitet\8. Semester (2022)\Bachelorprojekt\Kode\Data\Chunks\strip1._chunk1.png', 0)
-    # template, template_name = utils.load_image(r'C:\Users\Dumbledorf\Dropbox\Universitet\8. Semester (2022)\Bachelorprojekt\Kode\Data\Strips\strip1.png', 0)
-
-    # Linux
-    image, image_name = utils.load_image(r'/home/dumbledorf/Dropbox/Universitet/8. Semester (2022)/Bachelorprojekt/Kode/Data/Chunks/strip1._chunk1.png', 0)
-    template, template_name = utils.load_image(r'/home/dumbledorf/Dropbox/Universitet/8. Semester (2022)/Bachelorprojekt/Kode/Data/Strips/strip1.png', 0)
+    image = utils.load_image(r'C:\Users\Dumbledorf\Dropbox\Universitet\8. Semester (2022)\Bachelorprojekt\Kode\Data\Chunks\strip1._chunk1.png')
+    template = utils.load_image(r'C:\Users\Dumbledorf\Dropbox\Universitet\8. Semester (2022)\Bachelorprojekt\Kode\Data\Strips\strip1.png')
 
     height, width = template.shape
 
