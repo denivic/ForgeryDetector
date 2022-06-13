@@ -1,3 +1,6 @@
-temp.py
+# Temp files
+tem*.py
+
+# Python files
 *.pyi
 *.pyc

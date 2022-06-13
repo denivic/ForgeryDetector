@@ -1,11 +1,12 @@
 import cv2
+from matplotlib import pyplot as plt
 
 
 class ImageUtilities():
     def __init__(self):
         pass
 
-    def load_image(self, path: str, flag: int = None):
+    def load(self, path: str, flag=None):
         """Loads an image.
 
         Args:
@@ -26,16 +27,37 @@ class ImageUtilities():
         if flag is None:
             flag = 1
 
-        return cv2.imread(path, flag), path.split('\\')[-1][:-4]
+        return cv2.imread(path, flag)
 
-    def save_image(self, img, path):
-        cv2.imwrite(f'{path}.png', img)
+    def save(self, image, path):
+        """Saves an image.
 
-    def show_image(self, img, img_desc: str = None) -> None:
+        Args:
+            img (numpy.ndarray): The image to be saved.
+            path (str): The path of the image to be saved.
+        """
+        cv2.imwrite(f'{path}.png', image)
+
+    def showcv(self, image, img_desc=None):
+        """Shows the given image using OpenCV.
+
+        Args:
+            img (numpy.ndarray): The image to be shown
+            img_desc (str, optional): A description of the image. Defaults to None.
+        """
         if img_desc is None:
-            cv2.imshow('', img)
+            cv2.imshow('', image)
         else:
-            cv2.imshow(img_desc, img)
+            cv2.imshow(img_desc, image)
 
         cv2.waitKey(0)
         cv2.destroyAllWindows
+
+    def show(self, image):
+        """Shows the image using PyPlot.
+
+        Args:
+            image (numpy.ndarray): The image to show.
+        """
+        plt.imshow(image)
+        plt.show()

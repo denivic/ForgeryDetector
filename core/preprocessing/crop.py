@@ -1,53 +1,73 @@
 import cv2
-import numpy as np
-import typing
+from imutils import contours
+
+# Preprocessing constants
+FILTERED_BLOTS_PATH = r'Data\Blot data\Filtered blots'
+CROPPED_BLOTS_PATH = r'Data\Blot data\Cropped blots'
 
 
 class ImageCropper():
-    def __init__(self):
-        pass
+    def __init__(self, data_dir=None):
+        if data_dir is None:
+            self.data_dir = FILTERED_BLOTS_PATH
 
-    def crop_rectangle(self, img, bands: int, rec_width: int) -> typing.Any:
-        results = []
-        step_value = round((img.shape[0] / 8)) + 72
+        self.data_dir = data_dir
 
-        for columns in range(0, img.shape[1], step_value):
-            results.append(img[:, columns:columns + rec_width, :rec_width])
+    def crop_image(self, image, conts, path=None):
+        """Crops the contours found within an image into separate entities.
 
-        return results
+        Args:
+            image (numpy.ndarray): The image to be cropped.
+            conts (list[numpy.ndarray]): The contours of interest that will be cropped.
+            path (str): Where to save the images.
+        """
+        if path is None:
+            path = CROPPED_BLOTS_PATH
 
-    def find_contours(self, img):
-        if img is None:
-            print('No image has been loaded.')
-            return 0
+        # Sort contours such that crops are happening from top to bottom
+        (conts, _) = contours.sort_contours(conts, method="top-bottom")
+
+        for index, cont in enumerate(conts, start=1):
+            # Get bounding box
+            x, y, w, h = cv2.boundingRect(cont)
+
+            # Save image to path
+            cv2.imwrite(fr'{path}\img_{index}.jpg', image[y:y + h, x:x + w])
+
+    def find_contours(self, image):
+        """Finds the contours of an image.
+
+        Args:
+            img (numpy.ndarray): The image to find contours for.
+
+        Returns:
+            list[numpy.ndarry]: A list of countours.
+            numpy.ndarray: The hierarchy for the contours.
+        """
+        if image is None:
+            print('No image has been loaded because it could not be found.')
+            return
 
         # Converting to grayscale is necessary for finding the contours
-        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        ret, thresh = cv2.threshold(img, 127, 255, 0)
-        contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        _, gray_img = cv2.threshold(gray_img, 127, 255, 0)
+        contours, hierarchy = cv2.findContours(gray_img, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
 
-        moments = []
-        rect_contours = []
-        for cont in contours[1::]:
-            m = cv2.moments(cont)
+        return contours, hierarchy
 
-            # Find centroid using moments
-            cx = int(m['m10'] / m['m00'])
-            cy = int(m['m01'] / m['m00'])
+    def draw_contours(self, img, contours, contourid=None):
+        """Draws contours given an ID.
 
-            # Find borders/corners of rectangle
-            x_max, y_max = np.max(cont, axis=0)[0]
-            x_min, y_min = np.min(cont, axis=0)[0]
+        Args:
+            img (numpy.ndarray): The image to draw contours on.
+            contours (numpy.ndarray): The contours to draw.
+            contourid (int): Which contour to draw. Use -1 to draw all. Defaults to none.
 
-            # Save results
-            moments.append(cv2.circle(gray_img, (cx, cy), 5, (255, 255, 255), -1))
-            rect_contours.append(np.array([[[x_min - 2, y_min - 2]],
-                                           [[x_min - 2, y_max + 2]],
-                                           [[x_max + 2, y_max + 2]],
-                                           [[x_max + 2, y_min - 2]]]))
+        Returns:
+            numpy.ndarray: Returns an image object with the contours drawn.
+        """
+        if contourid is None:
+            contourid = -1  # Flag to draw all contours
 
-        return rect_contours, moments
-
-    def draw_contours(self, img, contours, contourid):
         return cv2.drawContours(img, contours, contourid, (0, 255, 0), 2)
