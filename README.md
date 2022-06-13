@@ -33,4 +33,4 @@ python -m example_steps.py
 ```
 **Note**: If you choose to run it directly, make sure to first open the file and comment out some of the function calls as it would otherwise take a long time to go through them all and be difficult to distinguish which function gave which output.
 
-There are also multiple test files in the outermost directory that you can run separately to see the output of different functions.
+There are also multiple test files, but these have to be placed in a folder outside ForgeryDetector in order to be able to use the package. Otherwise it won't recognize the package.
