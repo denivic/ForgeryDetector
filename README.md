@@ -13,17 +13,16 @@ python -m pip install -r requirements.txt
 ```
 This will install the following packages:
 ```
-numpy		      |	v1.22.3
-pymupdf 	    |	v1.19.5
-scipy 		    |	v1.5.4
-scikit-learn  |	v0.24.1
-selenium	    |	v3.141.0
-beatifulsoup4 |	v4.10.0
-pdfkit		    |	v1.0.0
-biopython	    |	v1.79
-opencv-python | v4.5.5.64
-python-dotenv |	v0.14.0
-tensorflow	  |	v2.8.0
+numpy v1.22.3
+pymupdf v1.19.5
+scipy v1.5.4
+scikit-learn v0.24.1
+selenium v3.141.0
+beatifulsoup4 v4.10.0
+pdfkit v1.0.0
+biopython v1.79
+opencv-python v4.5.5.64
+python-dotenv v0.14.0
 ```
 
 ## Quick demonstration
